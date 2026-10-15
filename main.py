@@ -5,6 +5,9 @@ import numpy as np
 """FALTA PEDIR IMÁGEN AL USUARIO.... Image.open"""
 imagen = Image.open("materiales/statue_of_liberty.jpg") #o lo que pida el usuario"
 
+#funcion qu tiene que hacer isa
+
+
 def filtroGameBoy(imagen):
     imagen = imagen.resize ((160,144))
     matriz_pixeles = np.array (imagen)
