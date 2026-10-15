@@ -14,3 +14,4 @@ matriz = filtroGameBoy (imagen)
 
 print (matriz.shape)
 print (matriz[0,0])
+print ("HOLA")
