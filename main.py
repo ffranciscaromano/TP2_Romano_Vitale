@@ -1,44 +1,56 @@
-import PIL
 from PIL import Image
 import numpy as np
+from gameboy import filtroGameBoy
+from filtroCRT import filtroCRT
+from insertar_pantalla import insertar_en_pantalla
 
-def filtroGameBoy(imagen):
-    GAMEBOY = [(15, 56, 15), (48, 98, 48), (139, 172, 15), (155, 188, 15)]
-    
-    BAYER_4 = [
-        [ 0,  8,  2, 10],
-        [12,  4, 14,  6],
-        [ 3, 11,  1,  9],
-        [15,  7, 13,  5],
-        ]
-    
-    imagen = imagen.resize((160,144))
-    matriz_pixeles = np.array(imagen)
+ruta_gameboy: str = "materiales/gameboy.png" 
+ruta_gameboy_mascara: str = "materiales/gameboy_mascara.png"
+ruta_tv: str = "materiales/tv.png"
+ruta_mascara_tv: str = "materiales/tv_mascara.png"
 
-    alto = matriz_pixeles.shape[0]
-    ancho = matriz_pixeles.shape [1]
-    paso = 64
-    
-    matriz_salida = np.zeros ((alto, ancho, 3), dtype = np.uint8)
-    
-    for y in range (alto):
-        for x in range (ancho):
-            r = int (matriz_pixeles[y, x, 0])
-            g = int (matriz_pixeles[y, x, 1])
-            b = int (matriz_pixeles [y, x, 2])
-            brillo = (r + g + b) / 3
+def main() -> None:
+    ruta: str = input ("Ingrese la ruta de la imagen: ")
+    try:
+        imagen: Image.Image = Image.open(ruta)
 
-            ajuste = ( ((BAYER_4[y % 4][x % 4] + 0.5)/16) - 0.5 ) * paso
-            brillo = brillo + ajuste
+    except FileNotFoundError:
+        print ("No se encontró la imagen. Por favor, verifique la ruta e intente nuevamente.")
+        return 
 
-            indice = int (brillo // paso)
-            indice = max (0, min(3, indice)) #asegura que nunca sea > 0, <3
+    pantalla: str = input("Seleccione la pantalla (gameboy/crt): ")
+    if pantalla != "gameboy" and pantalla != "crt":
+        print ("Pantalla inválida. Las opciones son 'gameboy' o 'crt'.")
+        return 
 
-            matriz_salida [y, x] = GAMEBOY[indice]
+    #Desplazamiento sólo para crt
+    desplazamiento: int = 3
+    if pantalla == "crt":
+        texto: str = input ("Ingrese el desplazamiento de canales (default=3): ")
+        if texto != "":
+            try:
+                desplazamiento = int(texto)
 
-    return matriz_salida
+            except ValueError:
+                print ("El desplazamiento debe ser un número entero positivo.")
+                return
 
-imagen_abierta = Image.open("materiales/statue_of_liberty.jpg")
+            if desplazamiento <= 0:
+                print ("El desplazamiento debe ser un número entero positivo.")
+                return
 
-resultado = filtroGameBoy(imagen_abierta)
-Image.fromarray (resultado).save("probando_gameboy.jpg")
+    ruta_salida: str = input ("Seleccione la ruta para guardar la imágen procesada: ")
+
+    if pantalla == "gameboy":
+        foto_filtro: np.array = filtroGameBoy(imagen)
+        final: np.array = insertar_en_pantalla(foto_filtro, ruta_gameboy, ruta_gameboy_mascara)
+    else:
+        foto_filtro = filtroCRT(imagen, desplazamiento)
+        final = insertar_en_pantalla(foto_filtro, ruta_tv, ruta_mascara_tv)
+
+    Image.fromarray(final).save(ruta_salida)
+    print ()
+    print (f"Imagen guardada en {ruta_salida}")
+
+if __name__ == "__main__":
+    main()
