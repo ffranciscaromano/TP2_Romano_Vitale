@@ -10,6 +10,12 @@ ruta_tv: str = "materiales/tv.png"
 ruta_mascara_tv: str = "materiales/tv_mascara.png"
 
 def main() -> None:
+
+    """ La función solicita al usuario la ruta de la imagen, luego le pregunta qué tipo
+     de pantalla quiere. Aplica el filtro y lo guarda en archivo que le solicita
+     al usuario la ruta de guardado para la ubicación
+    No recibe ningún parametro de entrada, devuelve la imagén en un archivo."""
+
     ruta: str = input ("Ingrese la ruta de la imagen: ")
     try:
         imagen: Image.Image = Image.open(ruta)

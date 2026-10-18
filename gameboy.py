@@ -11,6 +11,10 @@ BAYER_4: list = [
     ]
     
 def filtroGameBoy(imagen: Image.Image) -> np.array:
+    
+    """ Ésta función apica el filtro gameboy a la imágen seleccionada, 
+    modificando a tonos de verde mediante dithering """
+
     imagen = imagen.resize((160,144)) #(ancho, alto) 
     matriz_pixeles: np.array = np.array(imagen)
 
@@ -23,7 +27,7 @@ def filtroGameBoy(imagen: Image.Image) -> np.array:
     for y in range (alto):
         for x in range (ancho):
             r: int = int (matriz_pixeles[y, x, 0])
-            g:int = int (matriz_pixeles[y, x, 1])
+            g: int = int (matriz_pixeles[y, x, 1])
             b: int = int (matriz_pixeles [y, x, 2])
             brillo: float = (r + g + b) / 3
 
