@@ -3,8 +3,9 @@ import numpy as np
 
 def insertar_en_pantalla (foto_filtro: np.array, ruta_foto: str, ruta_mascara: str):
 
-    """ Ésta función ajusta el tamaño original de la imágen ingresada 
-    al tamaño del tipo de pantalla seleccionada por el usuario. """
+    """ Ésta función inserta la imágen ingresada en la pantalla seleccionada.
+    Utiliza máscaras con escala de grises del 0 al 255, de más oscuro al más claro.  
+    Para luego marcar sobre el tipo de pantalla seleccionado por el usuario. """
 
     foto: np.array = np.array (Image.open(ruta_foto))
     mascara: np.array = np.array (Image.open(ruta_mascara))
