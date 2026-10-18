@@ -11,10 +11,12 @@ ruta_mascara_tv: str = "materiales/tv_mascara.png"
 
 def main() -> None:
 
-    """ La función solicita al usuario la ruta de la imagen, luego le pregunta qué tipo
-     de pantalla quiere. Aplica el filtro y lo guarda en archivo que le solicita
-     al usuario la ruta de guardado para la ubicación
-    No recibe ningún parametro de entrada, devuelve la imagén en un archivo."""
+    """La función solicita al usuario la ruta de la imagen, luego le pregunta qué tipo
+     de pantalla quiere (gameboy o crt) y la ruta de salida. Valida que la imágen exista, 
+     que la pantalla sea alguna con las cuales trabaja el programa y que el desplazamiento
+     sea un entero positivo. Finalmente, aplica el filtro, insertala imágen resultante en la 
+    pantalla correspondiente y guardala imágen en la ruta de salida ingresada por el usuario.
+    """
 
     ruta: str = input ("Ingrese la ruta de la imagen: ")
     try:
