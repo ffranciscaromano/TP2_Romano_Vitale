@@ -12,8 +12,19 @@ BAYER_4: list = [
     
 def filtroGameBoy(imagen: Image.Image) -> np.array:
     
-    """ Ésta función apica el filtro gameboy a la imágen seleccionada, 
-    modificando a tonos de verde mediante dithering """
+    """La función aplica el filtro gameboy a la imágen ingresada.  
+    El filtro lo aplica de la siguiente forma: redimensiona la imágen a 160x144,
+    calcula el brillo de cada píxel a partir del promedio de sus canales RGB, 
+    le suma el ajuste de dithering ordenado (matriz de Bayer 4x4) y lo lleva a 
+    uno de los 4 tonos de la paleta GAMEBOY
+    
+    Parámetros de entrada:
+        - imagen: imágen ya abierta con Image.open (Image.Image)
+    
+    Parámetros de salida:
+        - Matriz numpy uint8 de forma (144, 160, 3) con la imagen ya
+            filtrada con gameboy    
+    """
 
     imagen = imagen.resize((160,144)) #(ancho, alto) 
     matriz_pixeles: np.array = np.array(imagen)
