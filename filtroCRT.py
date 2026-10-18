@@ -5,14 +5,21 @@ import numpy as np
 
 def filtroCRT(imagen:Image.Image, desplazamiento: int = 3) -> np.array:
 
-    """ La función recibe la imágen y el despalzamineto, ambos 
-    ingresados por el usuario. Primero reacomoda el tamaño 
-    de la imágen para que sea del tamaño del tele, luego la 
-    convierte en matriz para trabajar con ella. Luego desplazamos los píxeles
-    dado el número ingresado por el usuario, sino esta configurado para 
-    que el desplazamiento sea 3, de no poner ningún valor. Y el detalle que 
-    destaca al CRT son sus líneas claras/oscuras horizontales. 
-    La función devuelve """
+    """La función recibe la imágen y el desplazamiento como parámetros, ambos 
+    ingresados por el usuario. Luego, aplica el filtro CRT en la imágen solicitada 
+    de la siguiente forma: primero, redimensiona la imágen a 320x240; después, desplaza
+    los canales rojo (hacia la izquierda) y azul (hacia la derecha) según lo que 
+    solicitó el usuario (3 por default en caso de no ingresar nada), y oscurece las 
+    filas pares para simular las scanlines. 
+    
+    Parámetros de entrada:
+        - imagen: imágen ya abierta con Image.com (Image.Image)
+        - desplazamiento: cantidad de píxeles de desplazamiento (por default 3)
+
+    Parametros de salida:
+        - Matriz numpy uint8 de forma (240, 320, 3) con la imágen filtrada con el 
+        filtro CRT
+    """
 
     #resize y convertir en números
     imagen = imagen.convert("RGB").resize((320, 240))
