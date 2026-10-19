@@ -50,8 +50,8 @@ def main() -> None:
     ruta_salida: str = input ("Seleccione la ruta para guardar la imágen procesada: ")
 
     if pantalla == "gameboy":
-        foto_filtro: np.array = filtroGameBoy(imagen)
-        final: np.array = insertar_en_pantalla(foto_filtro, ruta_gameboy, ruta_gameboy_mascara)
+        foto_filtro: np.ndarray = filtroGameBoy(imagen)
+        final: np.ndarray = insertar_en_pantalla(foto_filtro, ruta_gameboy, ruta_gameboy_mascara)
     else:
         foto_filtro = filtroCRT(imagen, desplazamiento)
         final = insertar_en_pantalla(foto_filtro, ruta_tv, ruta_mascara_tv)
