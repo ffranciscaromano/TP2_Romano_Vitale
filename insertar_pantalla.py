@@ -1,17 +1,17 @@
 from PIL import Image
 import numpy as np
 
-def insertar_en_pantalla (foto_filtro: np.array, ruta_foto: str, ruta_mascara: str):
+def insertar_en_pantalla (foto_filtro: np.ndarray, ruta_foto: str, ruta_mascara: str):
 
     """ Ésta función inserta la imágen ingresada en la pantalla seleccionada.
     Utiliza máscaras con escala de grises del 0 al 255, de más oscuro al más claro.  
     Para luego marcar sobre el tipo de pantalla seleccionado por el usuario. """
 
-    foto: np.array = np.array (Image.open(ruta_foto))
-    mascara: np.array = np.array (Image.open(ruta_mascara))
+    foto: np.ndarray = np.array (Image.open(ruta_foto))
+    mascara: np.ndarray = np.array (Image.open(ruta_mascara))
 
-    alto: int = mascara.shape [0]
-    ancho: int = mascara.shape [1]
+    alto: int = mascara.shape[0]
+    ancho: int = mascara.shape[1]
 
     y1: int = alto
     y2: int = -1
@@ -36,9 +36,10 @@ def insertar_en_pantalla (foto_filtro: np.array, ruta_foto: str, ruta_mascara: s
     #Estiro la imagen 
     ancho_pantalla: int = x2 - x1 + 1
     alto_pantalla: int = y2 - y1 + 1
-    img_estirada: np.array = Image.fromarray(foto_filtro).resize((ancho_pantalla, alto_pantalla))
+    img_estirada: np.ndarray = np.array(
+        Image.fromarray(foto_filtro).resize((ancho_pantalla, alto_pantalla)))
     
-    resultado: np.array = foto.copy()
+    resultado: np.ndarray = foto.copy()
     for y in range(y1, y2 + 1):
         for x in range(x1, x2 + 1):
             if mascara[y, x] == 255:
