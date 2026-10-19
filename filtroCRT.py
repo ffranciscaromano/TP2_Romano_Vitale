@@ -3,7 +3,7 @@ from PIL import Image
 import numpy as np
 
 
-def filtroCRT(imagen:Image.Image, desplazamiento: int = 3) -> np.array:
+def filtroCRT(imagen:Image.Image, desplazamiento: int = 3) -> np.ndarray:
 
     """La función recibe la imágen y el desplazamiento como parámetros, ambos 
     ingresados por el usuario. Luego, aplica el filtro CRT en la imágen solicitada 
@@ -22,9 +22,9 @@ def filtroCRT(imagen:Image.Image, desplazamiento: int = 3) -> np.array:
     """
 
     #resize y convertir en números
-    imagen = imagen.convert("RGB").resize((320, 240))
-    matriz: np.array = np.array(imagen)
-    resultado: np.array = matriz.copy()
+    imagen = imagen.resize((320, 240))
+    matriz: np.ndarray = np.array(imagen)
+    resultado: np.ndarray = matriz.copy()
 
 
     #desplazamineto
@@ -35,20 +35,18 @@ def filtroCRT(imagen:Image.Image, desplazamiento: int = 3) -> np.array:
     alto: int = matriz.shape[0]
     ancho: int = matriz.shape[1]
 
-    for x in range(ancho):
+    for y in range(alto):
 
-        for y in range(alto):
-
+        for x in range(ancho):
             if x - desplazamiento >= 0: 
                 resultado[y, x, ROJO] = matriz[y, x - desplazamiento, ROJO]
             if x + desplazamiento < ancho:
-                resultado[y, x, AZUL] = resultado[y, x + desplazamiento, AZUL]
+                resultado[y, x, AZUL] = matriz[y, x + desplazamiento, AZUL]
 
     #scanlines
     for y in range(0, alto, 2):
         for x in range(ancho):
             for color in range(3):
-                resultado[y, x, color] = round(resultado[y,x, color]* 0.5)
-
+                resultado[y, x, color] = round(int(resultado[y, x, color]) * 0.5)
 
     return resultado 
